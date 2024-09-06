@@ -7,7 +7,7 @@ HOST_NAME = os.environ.get('HOST_NAME')
 
 @api.get('/all')
 def public_get_product():
-    if HOST_NAME == "app_product_service_" + str(random.randint(1, 3)):
+    if HOST_NAME == "app_product_service_3":
         return {
             "data": [
                 {
