@@ -36,19 +36,29 @@ def majority_vote(responses: List[requests.Response]) -> Dict:
         logging.debug("No valid responses found.")
         return None
 
+    # Convertir las respuestas a una forma hashable para contarlas
     hashable_dicts = [make_hashable(d) for d in resp_dicts]
     counter = Counter(hashable_dicts)
 
+    # Obtener la respuesta más común
     most_common = counter.most_common(1)
 
     if most_common:
         most_common_dict = dict(most_common[0][0])
         logging.debug(f"Most common dict: {most_common_dict}")
+
+        # Obtener la respuesta menos común
+        least_common = counter.most_common()[-1]
+        least_common_hashable = least_common[0]
+
+        # Buscar el diccionario original correspondiente al least_common
         for response in responses:
-            response_hashable = make_hashable(response.json())
-            if response_hashable == make_hashable(most_common_dict):
-                logging.debug(f"Correct response found: {response.json()}")
-                return response.json()
+            if make_hashable(response.json()) == least_common_hashable:
+                least_common_dict = response.json()
+                logging.warning(f"Incorrect response from server: {least_common_dict.get('source')}")
+                break
+
+        return most_common_dict
 
     logging.debug("No correct response found.")
     return None
@@ -74,12 +84,14 @@ def validate():
             if response:
                 responses.append(response)
 
-    correct_response = majority_vote(responses)
+    # Obtener la respuesta más común
+    most_common_dict = majority_vote(responses)
 
-    if correct_response is None:
+    if most_common_dict is None:
         return jsonify({'message': 'No se encontró una respuesta correcta'}), 404
 
-    return jsonify(correct_response)
+    logging.info(f"Server with correct response: {most_common_dict.get('source')}")
+    return jsonify(most_common_dict)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
