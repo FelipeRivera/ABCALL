@@ -39,6 +39,8 @@ services:
     container_name: validator_service
     networks:
       - api_gateway_net
+    volumes:
+      - ./logs:/app/logs
     restart: always
 
   app_product_service_1:

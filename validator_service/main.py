@@ -6,7 +6,10 @@ import concurrent.futures
 import logging
 
 # Configura el logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(message)s)',
+                    filename='/app/logs/validator.log',
+                    filemode='a')
 
 app = Flask(__name__)
 
