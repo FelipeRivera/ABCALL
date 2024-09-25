@@ -3,7 +3,7 @@ import csv
 from collections import defaultdict
 
 # Ruta del archivo de log
-log_file_path = '/Users/feliperivera/Desktop/MicroExp/logs/protected.log'
+log_file_path = './logs/protected.log'
 
 # Expresiones regulares para extraer datos
 pattern_warning = re.compile(r'WARNING - Incorrect response from server: (.+)')
@@ -35,7 +35,7 @@ except Exception as e:
     exit(1)
 
 # Guarda los datos procesados en un archivo CSV
-csv_file_path = '/Users/feliperivera/Desktop/MicroExp/logs/log_analysis.csv'
+csv_file_path = './logs/log_analysis.csv'
 try:
     with open(csv_file_path, 'w', newline='') as csvfile:
         fieldnames = ['Server', 'Correct Responses', 'Incorrect Responses']

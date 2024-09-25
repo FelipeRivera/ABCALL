@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Ruta del archivo CSV
-csv_file_path = '/Users/feliperivera/Desktop/MicroExp/logs/log_analysis.csv'
+csv_file_path = './logs/log_analysis.csv'
 
 # Lee el archivo CSV
 data = pd.read_csv(csv_file_path)
@@ -29,7 +29,7 @@ plt.legend()
 plt.tight_layout()
 
 # Guarda el gráfico
-plt.savefig('/Users/feliperivera/Desktop/MicroExp/logs/log_analysis.png')
+plt.savefig('./logs/log_analysis.png')
 plt.show()
 
 print("Gráfico generado y guardado como log_analysis.png.")
