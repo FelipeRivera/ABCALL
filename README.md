@@ -1,7 +1,7 @@
-# Proyecto de Arquitectura: Votación y Redundancia Activa
+# Proyecto de Arquitectura: Seguridad
 
 ## Descripción
-Este es un experimento para probar tácticas de arquitectura de votación y redundancia activa, realizado utilizando Docker y Nginx.
+Este proyecto es un experimento diseñado para probar estrategias de separación de entidades, identificación, autenticación y autorización de actores, utilizando Docker y Nginx.
 
 ## Pasos para correr el proyecto
 
@@ -21,8 +21,43 @@ docker compose up -d --force-recreate
 
 Este comando levanta todos los servicios definidos en docker-compose.yml en segundo plano (-d). La opción --force-recreate asegura que los contenedores se vuelvan a crear, incluso si no hay cambios en la configuración o el código.
 
-### 5. Pruebe el servicio
-Una vez que los contenedores estén corriendo, puede probar el servicio utilizando Postman u otra herramienta de API. Realice una petición GET a la siguiente URL:
-http://localhost:8881/public/product/all
+### 5. Probar los servicios
 
-Esto le permitirá acceder al servicio y verificar que está funcionando correctamente.
+Una vez que los contenedores estén en ejecución, puedes probar los servicios utilizando herramientas como **Postman** o **cURL**. A continuación se detallan algunos endpoints importantes:
+
+#### 1. Obtener token de autorización
+
+Para autenticarte y obtener un token de acceso, realiza una solicitud `POST` al siguiente endpoint:
+
+- **Método HTTP**: `POST`
+- **URL**: `http://localhost:8881/public/auth/login`
+  
+Credenciales de acceso:
+
+- **Administrador**:
+  - **Usuario**: `admin`
+  - **Contraseña**: `123456`
+  
+- **Invitado**:
+  - **Usuario**: `gues`
+  - **Contraseña**: `123456`
+
+El token de acceso devuelto deberá ser utilizado en las siguientes solicitudes a las APIs públicas y privadas.
+
+#### 2. Acceder a la API pública
+
+Esta API está disponible tanto para administradores como para invitados. El token de acceso obtenido debe enviarse como parte de la solicitud.
+
+- **Método HTTP**: `GET`
+- **URL**: `http://localhost:8881/public/product/all`
+- **Nota**: Incluye el token de acceso en los encabezados de la solicitud.
+
+#### 3. Acceder a la API privada (Solo para administradores)
+
+Esta API es accesible únicamente por administradores. Asegúrate de enviar el token de acceso correspondiente al usuario administrador.
+
+- **Método HTTP**: `GET`
+- **URL**: `http://localhost:8881/protected/product/9`
+- **Nota**: El token de acceso de administrador es necesario para acceder a este endpoint.
+
+---
