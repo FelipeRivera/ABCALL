@@ -7,7 +7,6 @@ import jwt
 api = Blueprint('public_api', __name__)
 JWT_ACCESS_TOKEN_SECRET_KEY = 'supersecretkey'
 
-
 @api.post('/login')
 def login():
     try:
@@ -58,7 +57,6 @@ def login():
         traceback.print_exc()
         return {'message': 'Internal Server Error'}, 500
 
-
 @api.post('/logout')
 def logout():
     # Implement token revocation
@@ -66,7 +64,6 @@ def logout():
     return {
         'message': 'Success'
     }, 200
-
 
 @api.get('/permissions')
 def get_permissions():
@@ -107,7 +104,6 @@ def get_permissions():
         'data': matched_role.get('permissions'),
         'message': 'OK'
     }, 200
-
 
 @api.get('/token/info')
 def get_token_info():

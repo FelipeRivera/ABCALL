@@ -18,8 +18,6 @@ services:
       - auth_service
       - app_product_service_1
       - app_product_service_2
-      - app_product_service_3
-      - validator_service
 
   auth_service:
     image: auth_service_image:latest
@@ -31,17 +29,6 @@ services:
       PYTHONUNBUFFERED: 1
     networks:
       - api_gateway_net
-
-  validator_service:
-    build:
-      context: ./validator_service/
-      dockerfile: Dockerfile
-    container_name: validator_service
-    networks:
-      - api_gateway_net
-    volumes:
-      - ./logs:/app/logs
-    restart: always
 
   app_product_service_1:
     image: app_product_image:latest
@@ -65,19 +52,6 @@ services:
     environment:
       PYTHONUNBUFFERED: 1
       HOST_NAME: app_product_service_2
-    networks:
-      - api_gateway_net
-    restart: always
-
-  app_product_service_3:
-    image: app_product_image:latest
-    build:
-      context: ./app_product/
-      dockerfile: Dockerfile
-    container_name: app_product_service_3
-    environment:
-      PYTHONUNBUFFERED: 1
-      HOST_NAME: app_product_service_3
     networks:
       - api_gateway_net
     restart: always

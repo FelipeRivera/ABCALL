@@ -3,7 +3,7 @@ import csv
 from collections import defaultdict
 
 # Ruta del archivo de log
-log_file_path = '/Users/feliperivera/Desktop/MicroExp/logs/validator.log'
+log_file_path = '/Users/feliperivera/Desktop/MicroExp/logs/protected.log'
 
 # Expresiones regulares para extraer datos
 pattern_warning = re.compile(r'WARNING - Incorrect response from server: (.+)')

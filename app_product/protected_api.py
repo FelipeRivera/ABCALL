@@ -1,6 +1,17 @@
 import os
 from flask import Blueprint
 from middleware import require_token, require_permission
+import logging
+
+log_dir = './logs/'
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
+
+# Configura el logging
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(message)s)',
+                    filename=os.path.join(log_dir, 'protected.log'),
+                    filemode='a')
 
 api = Blueprint('protected_api', __name__)
 HOST_NAME = os.environ.get('HOST_NAME')

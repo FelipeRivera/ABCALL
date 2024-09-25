@@ -4,7 +4,6 @@ from functools import wraps
 from flask import request
 import requests as http_request
 
-
 def require_token(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
